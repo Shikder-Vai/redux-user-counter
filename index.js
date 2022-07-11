@@ -39,14 +39,17 @@ const counterReducer = (state = initialCountState, action) => {
   switch (action.type) {
     case INCREMENT:
       return {
+        ...state,
         Count: state.Count + 1,
       };
     case DECREMENT:
       return {
+        ...state,
         Count: state.Count - 1,
       };
     case RESET:
       return {
+        ...state,
         Count: 0,
       };
 
