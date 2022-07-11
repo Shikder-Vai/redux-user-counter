@@ -1,56 +1,35 @@
 /**
- * require store from redux
+ * require ccreateStore from redux
  * set initial state
- * set action and action type
+ * set action
+ * set payload value on action
  * create reducer
  * create store
  * subscribe store
  * dispatch store
  */
-
 const { createStore } = require("redux");
 
-//CONSTAINTS
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
-const RESET = "RESET";
+//constaint
+const ADD_USER = "ADD_USER";
 
-const initialCountState = {
-  Count: 0,
+const initialUserState = {
+  users: ["Shikder"],
+  count: 1,
 };
-
-const incrementCount = () => {
+const addNewUsers = (users) => {
   return {
-    type: INCREMENT,
+    type: ADD_USER,
+    payload: users,
   };
 };
-const decrementCount = () => {
-  return {
-    type: DECREMENT,
-  };
-};
-const resetCount = () => {
-  return {
-    type: RESET,
-  };
-};
-
-const counterReducer = (state = initialCountState, action) => {
+//Reducer creation
+const usersReducer = (state = initialUserState, action) => {
   switch (action.type) {
-    case INCREMENT:
+    case ADD_USER:
       return {
-        ...state,
-        Count: state.Count + 1,
-      };
-    case DECREMENT:
-      return {
-        ...state,
-        Count: state.Count - 1,
-      };
-    case RESET:
-      return {
-        ...state,
-        Count: 0,
+        users: [...state.users, action.payload],
+        count: state.count + 1,
       };
 
     default:
@@ -58,13 +37,11 @@ const counterReducer = (state = initialCountState, action) => {
   }
 };
 
-const store = createStore(counterReducer);
+//store section
+const store = createStore(usersReducer);
+
 store.subscribe(() => {
   console.log(store.getState());
 });
-store.dispatch(incrementCount());
-store.dispatch(incrementCount());
-store.dispatch(incrementCount());
-store.dispatch(decrementCount());
-store.dispatch(decrementCount());
-store.dispatch(resetCount());
+store.dispatch(addNewUsers("fatima"));
+store.dispatch(addNewUsers("himu"));
